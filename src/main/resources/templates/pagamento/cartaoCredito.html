@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Pagamento</title>
+
+    <style>
+        body{
+            margin-left: 200px;
+            padding: 50px;
+        }
+        .divBandeiras{
+            padding-left: 100px;
+            padding-top: 50px;
+            width: 100%;
+        }
+        .divBandeiras div{
+            float: left;
+            margin: 10px;
+        }
+        .botaoEnviar{
+            width: 200px;
+            margin-top: 20px;
+            margin-left: 65px;
+            padding: 10px;
+        }
+        .formInfo{
+            padding: 100px;
+        }
+        .formInfo div{
+            margin-top: 10px;
+        }
+        .formInfo div#numCartao input{
+            width: 40px;
+        }
+
+        .loader {
+            border: 16px solid #f3f3f3; /* Light grey */
+            border-top: 16px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+
+
+
+</head>
+<body>
+<div class="loader"></div>
+    <div class="divBandeiras">
+
+       <div id="visa">
+           <img src="bandeiraVisa.png" alt=""/>
+           <br/>
+           <input style="margin-top: 20px" type="radio" name="banco" value="Visa"/> Visa
+       </div>
+        <div id="masterCard">
+            <img src="bandeiraMaster.png" alt=""/>
+            <br/>
+            <input style="margin-top: 5px" type="radio" name="banco" value="MasterCard"/> MasterCard
+        </div>
+       <div>
+           <img src="bandeiraAE.png" alt=""/>
+           <br/>
+           <input type="radio" name="banco" value="AmericanExpress"/> AmericanExpress
+       </div>
+
+    </div>
+
+    <div class="formInfo">
+        <form th:action="@{/cliente/novo}" th:object="${pagamentoCartao}" method="post">
+
+
+
+            <div style="margin-left: 65px;" id="nomeTitular" class="form-group">
+                <label >Nome do titular:</label>
+                <input class="form-control" type="text" th:field="*{telefone}"/>
+            </div>
+            <div style="margin-left: 50px;" id="numCartao" class="form-group">
+                <label >Número do cartão:</label>
+                <input class="form-control" type="text" th:field=""/>
+                <input class="form-control" type="text" th:field=""/>
+                <input class="form-control" type="text" th:field=""/>
+                <input class="form-control" type="text" th:field=""/>
+            </div>
+            <div style="margin-left: 35px;" id="codSeg" class="form-group">
+                <label >código de segurança:</label>
+                <input class="form-control" type="text" th:field="*{telefone}"/>
+            </div>
+            <div id="validade" class="form-group">
+                <label >Data de validade docartão:</label>
+                <input class="form-control" type="text" th:field="*{telefone}"/>
+            </div>
+
+            <input class="btn btn-primary botaoEnviar" type="submit" value="Enviar" />
+        </form>
+    </div>
+
+
+
+
+</body>
+</html>
