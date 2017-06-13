@@ -4,11 +4,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.SGSRcomputador.enumeracoes.EnumStatus;
-import com.SGSRcomputador.frameworkPDS.models.Computador;
 import com.SGSRcomputador.frameworkPDS.models.CheckIn;
 import com.SGSRcomputador.frameworkPDS.models.Cliente;
+import com.SGSRcomputador.frameworkPDS.models.Computador;
 import com.SGSRcomputador.frameworkPDS.models.Loja;
+import com.SGSRcomputador.enumeracoes.EnumStatus;
 import com.SGSRcomputador.frameworkPDS.models.Servico;
 import com.SGSRcomputador.frameworkPDS.repository.CheckInRepository;
 import com.SGSRcomputador.frameworkPDS.repository.ServicoRepository;
@@ -70,7 +70,7 @@ public class ServicoService implements IServicoService{
 	
 	@Override
 	public void atualizarProduto(Computador produto) {
-		servicoRepository.updateCelular(produto);
+		servicoRepository.updateComputador(produto);
 	}
 
 	@Override
@@ -115,16 +115,16 @@ public class ServicoService implements IServicoService{
 	}
 	
 	@Override
-	public void vistoriaPendente(Integer idServico) {
+	public void elaboracaoOrcamento(Integer idServico) {
 		Servico servicoAtualizado = buscarPorId(idServico);
-		servicoAtualizado.setStatus(EnumStatus.VISTORIA_PENDENTE);
+		servicoAtualizado.setStatus(EnumStatus.ELABORACAO_ORCAMENTO);
 		inserir(servicoAtualizado);
 	}
 	
 	@Override
-	public void naoAutorizado(Integer idServico) {
+	public void cancelado(Integer idServico) {
 		Servico servicoAtualizado = buscarPorId(idServico);
-		servicoAtualizado.setStatus(EnumStatus.SERVICO_NAO_AUTORIZADO);
+		servicoAtualizado.setStatus(EnumStatus.CANCELADO);
 		inserir(servicoAtualizado);
 	}
 	
@@ -156,7 +156,4 @@ public class ServicoService implements IServicoService{
 		inserir(servicoAtualizado);
 	}
 	
-
-	
-
 }

@@ -31,7 +31,7 @@ public interface ServicoRepository extends JpaRepository<Servico, Integer>{
 	
 	@Modifying
 	@Query("UPDATE Servico s SET s.computador = '' WHERE s.computador =:computador")
-	ArrayList<Servico> updateCelular(@Param("computador") Computador computador);
+	ArrayList<Servico> updateComputador(@Param("computador") Computador computador);
 	
 }
 

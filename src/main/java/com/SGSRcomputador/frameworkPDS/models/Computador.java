@@ -16,8 +16,6 @@ import javax.persistence.OneToOne;
 @Entity
 public class Computador implements Serializable{
 
-	
-
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -64,9 +62,5 @@ public class Computador implements Serializable{
 	public void setCor(String cor) {
 		this.cor = cor;
 	}
-	
 
-
-	
-	
 }

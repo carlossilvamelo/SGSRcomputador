@@ -49,7 +49,7 @@
 				<div class="form-group"  th:if="${computadores != null}">
 					<div><label>Computador:</label></div>
 					<select class="form-control"  th:field="*{computador.id}">
-						<option th:each="v : ${computadores}" th:value="${v.id}" th:text="${v.id}"></option>
+						<option th:each="v : ${computadores}" th:value="${v.id}" th:text="${v.marcaModelo.modelo}"></option>
 					</select>
 				</div>
 			

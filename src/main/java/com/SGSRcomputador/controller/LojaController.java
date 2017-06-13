@@ -17,8 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.SGSRcomputador.frameworkPDS.models.Computador;
+import com.SGSRcomputador.enumeracoes.EnumCores;
 import com.SGSRcomputador.frameworkPDS.models.Cliente;
 import com.SGSRcomputador.frameworkPDS.models.Loja;
+import com.SGSRcomputador.frameworkPDS.models.MarcaModelo;
 import com.SGSRcomputador.frameworkPDS.models.Servico;
 import com.SGSRcomputador.frameworkPDS.services.ComputadorService;
 import com.SGSRcomputador.frameworkPDS.services.ClienteService;
@@ -28,24 +30,24 @@ import com.SGSRcomputador.frameworkPDS.services.ServicoService;
 
 
 @Controller
-@RequestMapping("/oficina")
+@RequestMapping("/loja")
 public class LojaController {
 	@Autowired
 	private ClienteService clienteService;
 	@Autowired
 	private LojaService lojaService;
 	@Autowired
-	private ComputadorService celularService;
+	private ComputadorService computadorService;
 	@Autowired
 	private ServicoService servicoService; 
 	
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ModelAndView oficina(Model model, HttpSession session){
-		ModelAndView mv = new ModelAndView("oficina/oficina");
+	public ModelAndView loja(Model model, HttpSession session){
+		ModelAndView mv = new ModelAndView("loja/loja");
 		
-		Loja oficina = (Loja) session.getAttribute("usuario");
-		List<Servico> listaServicos = servicoService.buscarServicosPorPrestadora(oficina);
+		Loja loja = (Loja) session.getAttribute("usuario");
+		List<Servico> listaServicos = servicoService.buscarServicosPorPrestadora(loja);
 		mv.addObject("listaServicos", listaServicos);
 		
 		return mv;
@@ -53,26 +55,26 @@ public class LojaController {
 	
 	
 	@GetMapping("/cadastro")
-	public ModelAndView formCadastroOficina(){
-		ModelAndView mv = new ModelAndView("/oficina/cadastro");
-		Loja oficina = new Loja();
-		mv.addObject("oficina", oficina);
+	public ModelAndView formCadastroLoja(){
+		ModelAndView mv = new ModelAndView("/loja/cadastro");
+		Loja loja = new Loja();
+		mv.addObject("loja", loja);
 		return mv;
 	}
 	
 	@PostMapping("/cadastro")
-	public ModelAndView cadastroOficina(Loja loja, RedirectAttributes attributes){
-		ModelAndView mv = new ModelAndView("redirect:/oficina/cadastro");
+	public ModelAndView cadastroLoja(Loja loja, RedirectAttributes attributes){
+		ModelAndView mv = new ModelAndView("redirect:/loja/cadastro");
 		lojaService.inserir(loja);
-		mv.addObject("oficina", loja);
-		attributes.addFlashAttribute("message", "Oficina cadastrada com sucesso!");	
+		mv.addObject("loja", loja);
+		attributes.addFlashAttribute("message", "Loja cadastrada com sucesso!");	
 		return mv;
 	}
 	
 	@RequestMapping("/todosServicos")
 	public ModelAndView mostrarServicos(HttpSession session){
 		
-		ModelAndView mv = new ModelAndView("oficina/todosServicos");
+		ModelAndView mv = new ModelAndView("loja/todosServicos");
 		//descer para a camada de validação
 		Loja temp = (Loja) session.getAttribute("usuario");
 		Loja loja = (Loja)lojaService.buscarPorId(temp.getId());
@@ -81,29 +83,32 @@ public class LojaController {
 	
 	@GetMapping("/novoServico")
 	public ModelAndView cadastrarServico(HttpSession session){
-		ModelAndView mv = new ModelAndView("oficina/novoServico");
+		ModelAndView mv = new ModelAndView("loja/novoServico");
 		
 		return mv;
 	}
 	
 	@PostMapping("/novoServico")
 	public ModelAndView cadastrarServico(Servico servico){
-		ModelAndView mv = new ModelAndView("oficina/novoServico");
+		ModelAndView mv = new ModelAndView("loja/novoServico");
 		
 		return mv;
 	}
 	
-	@GetMapping("/novoVeiculo")
-	public ModelAndView formVeiculo(@RequestParam(name="id", required=true) String id){
+	@GetMapping("/novoComputador")
+	public ModelAndView formComputador(@RequestParam(name="id", required=true) String id){
 		
 		
-		ModelAndView mv = new ModelAndView("oficina/formVeiculoOficina");
+		ModelAndView mv = new ModelAndView("loja/formComputadorLoja");
 
-		Computador celular = new Computador();
-		//List<String> marcas = veiculoService.listarMarcas();
-		//mv.addObject("cores", EnumCores.values());
-		//mv.addObject("marcas", marcas);
-		mv.addObject("veiculo", celular);
+		Computador computador = new Computador();
+		List<String> marcas = computadorService.buscarMarcas();
+		List<Cliente> clientes = clienteService.buscarTodos();
+		
+		mv.addObject("cores", EnumCores.values());
+		mv.addObject("marcas", marcas);
+		mv.addObject("computador", computador);
+		mv.addObject("clientes", clientes);
 		
 		return mv;
 	}
@@ -111,42 +116,40 @@ public class LojaController {
 	@GetMapping("/listarModelos" )
 	public  @ResponseBody List<String> listarModelos( String marca){
 		
-		//List<String> modelos = veiculoService.listarMarcaModelo(marca);
+		List<String> modelos = computadorService.buscarModelosPorMarca(marca);
 		
-		//return modelos;
-		return null;
-		
+		return modelos;
 	}
 	
-	@PostMapping("/novoVeiculo")
-	public ModelAndView salvarVeiculo(Computador celular, HttpSession session){
+	@PostMapping("/novoComputador")
+	public ModelAndView salvarComputador(Computador computador, HttpSession session){
 		
 		
-		ModelAndView mv = new ModelAndView("oficina/formVeiculoOficina");
-		
-		//MarcaModelo m = veiculoService.listarMarcaModelo(veiculo.getMarcaModelo().getMarca(), veiculo.getMarcaModelo().getModelo());
-		
-		//veiculo.setMarcaModelo(m);
-		
-		//veiculo.setCliente(cliente);
-		//cliente.addVeiculo(veiculo);
-		
-		//clienteService.inserir(cliente);
+		ModelAndView mv = new ModelAndView("loja/formComputadorLoja");
+		Cliente cliente = clienteService.buscarPorId(computador.getCliente().getId());
+		if(cliente != null){
+			MarcaModelo marcaModelo = computadorService.buscarPorMarcaModelo(computador.getMarcaModelo().getMarca(),
+					computador.getMarcaModelo().getModelo());
+			computador.setMarcaModelo(marcaModelo);
+			computador.setCliente(cliente);
+			cliente.addComputador(computador);
+			clienteService.inserir(cliente);
+		}
 		
 		return mv;
 	}
 	
 	@GetMapping("/novoCliente")
 	public ModelAndView formNovoCliente(){
-		ModelAndView mv = new ModelAndView("/oficina/formClienteOficina");
+		ModelAndView mv = new ModelAndView("/loja/formClienteLoja");
 		Cliente cliente = new Cliente();
 		mv.addObject("cliente", cliente);
 		return mv;
 	}
 	
 	@PostMapping("/novoCliente")
-	public ModelAndView cadastroClienteOficina(Cliente cliente, HttpSession session){
-		ModelAndView mv = new ModelAndView("redirect:/oficina/");
+	public ModelAndView cadastroClienteLoja(Cliente cliente, HttpSession session){
+		ModelAndView mv = new ModelAndView("redirect:/loja/");
 		clienteService.inserir(cliente);
 		
 		return mv;

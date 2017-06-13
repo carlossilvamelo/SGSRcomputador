@@ -2,9 +2,9 @@ package com.SGSRcomputador.frameworkPDS.services;
 
 import java.util.List;
 
-import com.SGSRcomputador.frameworkPDS.models.Computador;
 import com.SGSRcomputador.frameworkPDS.models.CheckIn;
 import com.SGSRcomputador.frameworkPDS.models.Cliente;
+import com.SGSRcomputador.frameworkPDS.models.Computador;
 import com.SGSRcomputador.frameworkPDS.models.Loja;
 import com.SGSRcomputador.frameworkPDS.models.Servico;
 
@@ -29,9 +29,9 @@ public interface IServicoService {
 
 	void aprovarOrcamentoServico(Integer idServico);
 
-	void vistoriaPendente(Integer idServico);
+	void elaboracaoOrcamento(Integer idServico);
 
-	void naoAutorizado(Integer idServico);
+	void cancelado(Integer idServico);
 
 	void aguardandoPecas(Integer idServico);
 

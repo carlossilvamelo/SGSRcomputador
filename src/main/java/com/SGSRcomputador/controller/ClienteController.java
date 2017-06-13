@@ -39,7 +39,7 @@ public class ClienteController {
 	@Autowired
 	private ClienteService clienteService;
 	@Autowired
-	private ComputadorService celularService;
+	private ComputadorService computadorService;
 	@Autowired
 	private ServicoService servicoService;
 	@Autowired
@@ -127,7 +127,7 @@ public class ClienteController {
 	}
 	
 	@RequestMapping("/meusComputadores")
-	public ModelAndView cadastrarVeiculo(HttpSession session){
+	public ModelAndView cadastrarComputador(HttpSession session){
 		
 		ModelAndView mv = new ModelAndView("cliente/meusComputadores");
 		
@@ -136,9 +136,9 @@ public class ClienteController {
 		
 		
 		/*
-		for(Veiculo veiculo : cliente.getVeiculo()){
+		for(Computador computador : cliente.getComputador()){
 			
-			for(Alerta alerta : veiculo.getAlertas()){
+			for(Alerta alerta : computador.getAlertas()){
 				
 				System.out.println(alerta.getTipo());
 			}
@@ -149,32 +149,32 @@ public class ClienteController {
 		
 	}
 	/*
-	@GetMapping("/addInfoExtraVeiculo")
-	public ModelAndView formInfoExtraVeiculo(@RequestParam(name="id", required=true) String id){
+	@GetMapping("/addInfoExtraComputador")
+	public ModelAndView formInfoExtraComputador(@RequestParam(name="id", required=true) String id){
 
 		ModelAndView mv = new ModelAndView("cliente/formInfoExtra");
 		
-	//	InfoExtraVeiculo infoExtraVeiculo = new InfoExtraVeiculo();
-	//	Veiculo veiculo = (Veiculo)celularService.buscarPorId(id);
+	//	InfoExtraComputador infoExtraComputador = new InfoExtraComputador();
+	//	Computador computador = (Computador)computadorService.buscarPorId(id);
 		
-	//	mv.addObject("veiculo", veiculo);
-		//mv.addObject("infoExtraVeiculo", infoExtraVeiculo);
-		
-		return mv;
-	}
-	
-	@PostMapping("/addInfoExtraVeiculo")
-	public ModelAndView saveInfoExtraVeiculo(InfoExtraVeiculo infoExtraVeiculo){
-	
-		ModelAndView mv = new ModelAndView("redirect:meusVeiculos");
-		
-		celularService.adicionarInfoExtra(infoExtraVeiculo);
+	//	mv.addObject("computador", computador);
+		//mv.addObject("infoExtraComputador", infoExtraComputador);
 		
 		return mv;
 	}
 	
-	@PostMapping("/removerVeiculo")
-	public @ResponseBody String removerVeiculo(String id){
+	@PostMapping("/addInfoExtraComputador")
+	public ModelAndView saveInfoExtraComputador(InfoExtraComputador infoExtraComputador){
+	
+		ModelAndView mv = new ModelAndView("redirect:meusComputadores");
+		
+		computadorService.adicionarInfoExtra(infoExtraComputador);
+		
+		return mv;
+	}
+	
+	@PostMapping("/removerComputador")
+	public @ResponseBody String removerComputador(String id){
 	
 		String result = "";
 		System.out.println("Remover");
@@ -182,9 +182,9 @@ public class ClienteController {
 		
 		try{
 			
-			servicoService.deletarTodos(celularService.buscarPorId(id));
-			//veiculoService.deleteAlertasVeiculo(veiculoService.buscarPorId(id));
-			celularService.deletePorId(id);
+			servicoService.deletarTodos(computadorService.buscarPorId(id));
+			//computadorService.deleteAlertasComputador(computadorService.buscarPorId(id));
+			computadorService.deletePorId(id);
 			result = "Success!";
 			
 		}catch(DataAccessException e){

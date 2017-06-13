@@ -2,11 +2,11 @@
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="layout/LayoutPadraoOficina">
+	layout:decorator="layout/LayoutPadraoLoja">
 	
 <head>
 	<meta charset="UTF-8"/>
-	<title>Área da Loja</title>
+	<title>Área da loja de reparos de computador</title>
 	
 	<link rel="stylesheet" type="text/css" th:href="@{/layout/stylesheets/custom.css}"/>
 	<script th:src="@{/layout/javascripts/bootstrap.min.js}"></script>
@@ -49,7 +49,7 @@
                   
                   <th>Data</th>
                   <th>Cliente</th>
-                  <th>Computador</th>
+                  <th>Aparelho</th>
                   <th>Descrição</th>
            		  <th>Status</th>
                   <th>Ações</th>
@@ -62,49 +62,44 @@
                 
                   <td th:text="${lista.dataRequerimento}"></td>
                   <td th:text="${lista.cliente.nome}"></td>
-                  <td th:text="${lista.marcaModelo.modelo}"></td>
+                  <td th:text="${lista.computador.marcaModelo.modelo}"></td>
                   <td th:text="${lista.descricao}" ></td>
-                  <td th:text="#{|enumStatus.${lista.status}|}"></td>
+                  <td th:text="${lista.status}"></td>
                   
                   <td>
 	                  <div  th:if="${lista.status.name() == 'PRE_DIAGNOSTICO'}">	
-	                  	<a  class="btn btn-default botaoAcompanhar" th:href="@{../servico/vistoriaPendente(id=${lista.id})}"> Vistoria pendente</a>
+	                  	<a  class="btn btn-default botaoAcompanhar" th:href="@{../servico/elaboracaoOrcamento(id=${lista.id})}"> Orçamento em elaboração</a>
+	                  	<a  class="btn btn-default botaoAcompanhar" th:href="@{../servico/cancelado(id=${lista.id})}"> Serviço cancelado</a>
 	                  </div>
 	                  
-	                  <div  th:if="${lista.status.name() == 'VISTORIA_PENDENTE'}">	
+	                  <div  th:if="${lista.status.name() == 'ELABORACAO_ORCAMENTO'}">	
 	                  	<a  class="btn btn-default botaoAcompanhar" th:href="@{../servico/proximoStatus(id=${lista.id})}"> Autorização pendente</a>
+	                  	<a  class="btn btn-default botaoAcompanhar" th:href="@{../servico/cancelado(id=${lista.id})}"> Serviço cancelado</a>
 	                  </div>
 	                  
 	                  <div  th:if="${lista.status.name() == 'AUTORIZACAO_PENDENTE'}">	
-	                  	<a  class="btn btn-default botaoAcompanhar" th:href="@{../servico/aprovarServico(id=${lista.id})}"> Serviço autorizado</a>
-	                  	<a  class="btn btn-default botaoAcompanhar" th:href="@{../servico/naoAutorizado(id=${lista.id})}"> Serviço não autorizado</a>
+	                  	<a  class="btn btn-default botaoAcompanhar" th:href="@{../servico/aprovarServicoAdmin(id=${lista.id})}"> Serviço autorizado</a>
+	                  	<a  class="btn btn-default botaoAcompanhar" th:href="@{../servico/cancelado(id=${lista.id})}"> Serviço cancelado</a>
 	                  </div>
 	                  
 	                  <div  th:if="${lista.status.name() == 'SERVICO_AUTORIZADO'}">	
 	                  	<a  class="btn btn-default botaoAcompanhar" th:href="@{../servico/aguardandoPecas(id=${lista.id})}"> Aguardando peças</a>
 	                  	<a  class="btn btn-default botaoAcompanhar" th:href="@{../servico/aguardandoCliente(id=${lista.id})}"> Aguardando cliente</a>
 	                  	<a  class="btn btn-default botaoAcompanhar" th:href="@{../servico/emAndamento(id=${lista.id})}"> Em andamento</a>
-	                  </div>
-	                  
-	                  <div  th:if="${lista.status.name() == 'SERVICO_NAO_AUTORIZADO'}">	
-	                  	<a  class="btn btn-default botaoAcompanhar" th:href="@{../servico/aprovarServico(id=${lista.id})}"> Serviço autorizado</a>
+	                  	<a  class="btn btn-default botaoAcompanhar" th:href="@{../servico/cancelado(id=${lista.id})}"> Serviço cancelado</a>
 	                  </div>
 	                  
 	                  <div  th:if="${lista.status.name() == 'AGUARDANDO_PECAS'}">	
 	                  	<a  class="btn btn-default botaoAcompanhar" th:href="@{../servico/aguardandoCliente(id=${lista.id})}"> Aguardando cliente</a>
+	                  	<a  class="btn btn-default botaoAcompanhar" th:href="@{../servico/cancelado(id=${lista.id})}"> Serviço cancelado</a>
 	                  </div>
 	                  
 	                  <div  th:if="${lista.status.name() == 'AGUARDANDO_CLIENTE'}">	
 	                  	<a  class="btn btn-default botaoAcompanhar" th:href="@{../servico/emAndamento(id=${lista.id})}"> Em andamento</a>
+	                  	<a  class="btn btn-default botaoAcompanhar" th:href="@{../servico/cancelado(id=${lista.id})}"> Serviço cancelado</a>
 	                  </div>
 	                  
 	                  <div  th:if="${lista.status.name() == 'EM_ANDAMENTO'}">	
-	                  	<a  class="btn btn-default botaoAcompanhar" th:href="@{../servico/finalizado(id=${lista.id})}"> Finalizado</a>
-	                  	<a  class="btn btn-default botaoAcompanhar" th:href="@{../servico/proximoStatus(id=${lista.id})}"> Aguardando complemento</a>
-	                  </div>
-	                  
-	                  <div  th:if="${lista.status.name() == 'AGUARDANDO_COMPLEMENTO'}">	
-	                  	<a  class="btn btn-default botaoAcompanhar" th:href="@{../servico/emAndamento(id=${lista.id})}"> Em andamento</a>
 	                  	<a  class="btn btn-default botaoAcompanhar" th:href="@{../servico/finalizado(id=${lista.id})}"> Finalizado</a>
 	                  </div>
 	                  

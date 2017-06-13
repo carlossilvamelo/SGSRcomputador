@@ -74,7 +74,7 @@
                 
                   <td th:text="${lista.dataRequerimento}"></td>
                   <td th:if="${lista.loja != null}" th:text="${lista.loja.nome}"></td>
-                  <td th:text="${lista.computador.marcaModelo.marca}"></td>
+                  <td th:text="${lista.computador.marcaModelo.modelo}"></td>
                   <td th:text="${lista.descricao}" ></td>
                   <td th:text="${lista.status.name()}"></td>
                   
@@ -90,7 +90,7 @@
 	                  <br/>
 	                  <a class="btn btn-default botaoAcompanhar" th:href="@{servico/acompanhamento(id=${lista.id})}">Acompanhar</a>
 	                  <br/>
-	                  <a class="btn btn-default botaoAcompanhar" th:href="@{../servico/relatorio(id=${lista.id})}"> relatorio</a>
+	                  <a class="btn btn-default botaoAcompanhar" th:href="@{../servico/relatorio(id=${lista.id})}"> Relatório</a>
                   </td>
                 
                 </tr>

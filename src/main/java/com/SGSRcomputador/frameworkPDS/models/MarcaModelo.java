@@ -24,8 +24,6 @@ public class MarcaModelo implements Serializable {
 	private Long id;
 	private String marca;
 	private String modelo;
-	@OneToOne(mappedBy="marcaModelo", cascade=CascadeType.ALL)
-	private Computador produto;
 
 	public MarcaModelo(){
 	}
@@ -53,14 +51,5 @@ public class MarcaModelo implements Serializable {
 	public void setModelo(String modelo) {
 		this.modelo = modelo;
 	}
-	
-	public Computador getProduto() {
-		return produto;
-	}
-
-	public void setProduto(Computador produto) {
-		this.produto = produto;
-	}
-	
 	
 }

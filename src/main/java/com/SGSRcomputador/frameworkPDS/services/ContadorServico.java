@@ -17,7 +17,7 @@ public abstract class ContadorServico {
 		Double valor= 0.0;
 		valor += orcamento.getPrecoMaoObra();
 		//puxar a lista de pecas com o id do orcamento
-		ArrayList<Peca> pecas = (ArrayList<Peca>) orcamento.getPecas();
+		ArrayList<Peca> pecas = (ArrayList<Peca>) orcamento.getPecasTroca();
 		for (Peca peca : pecas) {
 			valor += peca.getPreco();
 		}
